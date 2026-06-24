@@ -5,5 +5,6 @@
 """
 
 from .fizzbuzz import fizzbuzz
+from .palindrome import is_palindrome
 
-__all__ = ["fizzbuzz"]
+__all__ = ["fizzbuzz", "is_palindrome"]
