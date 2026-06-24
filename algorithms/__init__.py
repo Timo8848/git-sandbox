@@ -6,5 +6,6 @@
 
 from .fizzbuzz import fizzbuzz
 from .palindrome import is_palindrome
+from .binary_search import binary_search
 
-__all__ = ["fizzbuzz", "is_palindrome"]
+__all__ = ["fizzbuzz", "is_palindrome", "binary_search"]
