@@ -19,4 +19,5 @@ def binary_search(nums: List[int], target: int) -> int:
             hi = mid - 1
 
         print("hello, this is the first branch")
+        print("hello, this is the second branch test")
     return -1
