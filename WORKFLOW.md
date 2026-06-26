@@ -92,11 +92,24 @@ git branch -d feat/你的功能名   # 删掉本地分支
 
 ### 前提：装好 GitHub CLI 并登录
 
+**Windows**（在普通终端里跑，不是在 Claude Code 里）：
 ```bash
-# 安装（Windows，在普通终端里跑，不是在 Claude Code 里）
 winget install --id GitHub.cli
+```
+安装完关掉终端重开，再运行：
+```bash
+gh auth login
+```
 
-# 重开终端后登录
+**Mac**：
+```bash
+# 先装 Homebrew（如果还没装）
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 再装 GitHub CLI
+brew install gh
+
+# 登录
 gh auth login
 ```
 
