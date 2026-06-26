@@ -129,6 +129,38 @@ PR 也可以让它开：
 
 ---
 
+## ⚠️ 重要提醒：多个 session 并行时必须用 git worktree
+
+**什么情况会遇到：** 你在同一个 repo 目录下同时开了**两个 Claude Code session**（或者你和另一个 AI 同时在跑），想各自处理不同的任务。
+
+**为什么不能直接开两个：** 一个 git 目录同一时间只能停在一个分支上。如果 session A 在 `feat/login` 上写到一半，session B 跑了 `git checkout fix/bug`，A 的分支就被切走了，未提交的改动会混乱甚至丢失——**两个 session 在互相踩踏**。
+
+**解决办法：每个 session 用一个独立的 worktree。** worktree 是同一个仓库的另一个工作目录，有自己的分支，但和主目录共享同一份 `.git` 历史，互不干扰。
+
+```bash
+# 在主目录旁边新建一个 worktree，检出到另一个分支
+git worktree add ../git-sandbox-fix fix/bug
+
+# 让第二个 session 在这个新目录里工作
+cd ../git-sandbox-fix
+
+# 看当前有哪些 worktree
+git worktree list
+
+# 用完后清理（先 cd 回主目录）
+git worktree remove ../git-sandbox-fix
+```
+
+**规则：**
+- 每个 worktree = 一个独立目录 + 一个独立分支，session 在自己的目录里干活
+- 所有 worktree 共享同一个 `.git`，commit 和分支信息实时同步，不用反复 clone
+- 同一个分支不能被两个 worktree 同时检出（git 会报错）
+- 用完记得 `git worktree remove` 清理
+
+> 一句话：**同一个 repo 想开多个 session 并行，就给每个 session 配一个 worktree。**
+
+---
+
 ## 常见问题
 
 ### push 失败：`Connection was reset`
