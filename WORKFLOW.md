@@ -115,6 +115,18 @@ gh auth login
 
 按提示选择浏览器授权，登录你的 GitHub 账号即可。Claude Code 之后就能直接操作 GitHub。
 
+### ⚠️ 用 VPN 的话，先让终端走代理
+
+大家基本都开着 VPN（Clash 等）。VPN 的代理通常只对浏览器生效，**终端里的 git / gh 默认不走代理**，所以第一次 `git push` 或 `gh auth login` 很容易报 `Connection was reset`。
+
+提前配一次（全局，只需配一次）：
+```bash
+# 端口换成你 VPN 客户端里的「混合端口 / HTTP 端口」，Clash Verge 一般是 7890
+git config --global http.proxy http://127.0.0.1:7890
+git config --global https.proxy http://127.0.0.1:7890
+```
+> 关掉 VPN 之后如果反而连不上，把这两行删掉即可：`git config --global --unset http.proxy` 和 `--unset https.proxy`。
+
 ### 怎么给 Claude Code 指令
 
 直接用自然语言说，例如：
